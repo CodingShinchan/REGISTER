@@ -40,24 +40,16 @@ app.post("/submit", async (req, res) => {
   }
 });
 
-// app.get("/submit", async (req, res) => {
-//   try {
-//     const users = await User.find();
-//     res.status(200).send(users);
-//   } catch (error) {
-//     res
-//       .status(400)
-//       .send({ message: "Error fetching users", error: error.message });
-//   }
-// });
-
-app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, 'index.html'));
+app.get("/submit", async (req, res) => {
+  try {
+    const users = await User.find();
+    res.status(200).send(users);
+  } catch (error) {
+    res
+      .status(400)
+      .send({ message: "Error fetching users", error: error.message });
+  }
 });
-
-
-
-
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
