@@ -137,7 +137,7 @@ body
     </style>
     <div class="container">
         <div class="title">Registration Form</div>
-        <form id="userForm" action="/submit" method="post" autocomplete="off" class="form">
+        <form id="userForm"  autocomplete="off" class="form">
             <div class="user_details">
                 <div class="column">
                 <div class="input_box">
@@ -218,7 +218,7 @@ body
 
           $.ajax({
             type: "POST",
-            url: "http://localhost:3000/submit",
+            url: "https://register-xhak.onrender.com/submit",
             data: JSON.stringify(formData),
             contentType: "application/json",
             success: function (response) {
