@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <title>Users List</title>
+</head>
+<body>
+
+   <h1>Users List</h1>
+    <table>
+        <thead>
+        <tr id="header">
+          <th>First Name</th>
+          <th>Last Name</th>
+          <th>Mobile No</th>
+          <th>Email</th>
+          <th>Address</th>
+          <th>Login ID</th>
+          <th>Password</th>
+        </tr>
+        </thead>
+        <tbody id="usersTableBody"></tbody>
+    </table>
+    <button id="addNewUserBtn">Add New User</button>
+
+
+    <!-- CSS -->
+    <style>
+        body
+        {
+            margin: 0;
+            padding: 0;
+            font-family: Verdana, Geneva, Tahoma, sans-serif;
+
+        }
+
+        table
+        {
+            position: absolute;
+            left: 50%;
+            top: 37%;
+            transform: translate(-50%, -50%);
+            border-collapse: collapse;
+            width: 800px;
+            height: 200px;
+            border: 1px solid #bdc3c7;
+            box-shadow: 2px 2px 12px rgba(0,0,0,0.2), -px -px 8px rgba(0,0,0,0.2);
+            
+        }
+
+        tr
+        {
+            transition: all .2s ease-in;
+            cursor: pointer;
+            
+        }
+
+        th
+        {
+            padding: 12px;
+            text-align: left;
+            border-radius: 1px solid #ddd;
+        }
+
+        #header
+        {
+            background-color: rgb(130, 106, 251);;
+            color: #fff;
+
+        }
+
+        h1
+        {
+            font-weight: 600;
+            text-align: center;
+            background-color: rgb(130, 106, 251);
+            color: #fff;
+            padding: 10px 0px;
+
+        }
+
+        tr:hover
+        {
+            background-color: #f5f5f5;
+            transform: scale(1.02);
+            box-shadow: 2px 2px 12px rgba(0,0,0,0.2), -px -px 8px rgba(0,0,0,0.2);
+
+        }
+
+        #addNewUserBtn 
+        {
+        font-weight: 600;
+        margin: auto;
+        width: 150px;
+        padding: 10px;
+        background-color: rgb(130, 106, 251);
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-family: Verdana, Geneva, Tahoma, sans-serif;
+        box-shadow: 0 0 5px rgba(70, 68, 68, 0.5);
+        margin-top: 270px;
+        position: absolute;
+        left: 45%;
+        top: 50%;
+
+        }
+
+        #addNewUserBtn:hover 
+        {
+            background-color: rgb(80, 62, 173);
+
+        }
+
+        /* media query */
+
+        @media only screen and (max-width: 768px)
+        {
+            table {
+                width: 90%;
+            }
+        }
+
+    </style>
+
+  
+    <script>
+        $(document).ready(function () {
+          $.ajax({
+            type: "GET",
+            url: "http://localhost:3000/submit",
+            success: function (response) {
+              const usersTableBody = $("#usersTableBody");
+              response.forEach((user) => {
+                const userRow = `
+                              <tr>
+                                  <td>${user.firstName}</td>
+                                  <td>${user.lastName}</td>
+                                  <td>${user.mobileNo}</td>
+                                  <td>${user.emailId}</td>
+                                  <td>${user.address.street}, ${user.address.city}, ${user.address.state}, ${user.address.country}</td>
+                                  <td>${user.loginId}</td>
+                                  <td>${user.password}</td>
+                              </tr>
+                          `;
+                usersTableBody.append(userRow);
+              });
+            },
+            error: function (error) {
+              alert("Error fetching users");
+              console.log(error);
+            },
+          });
+          $("#addNewUserBtn").on("click", function () {
+            window.location.href = "index.html";
+          });
+        });
+      </script>
+</body>
+</html>   

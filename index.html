@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <title>Registration Form</title>
+</head>
+<body>
+    <style>
+        *
+{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Poppins", sans-serif;
+
+}
+
+body
+{
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    background-color: rgb(130, 106, 251);
+
+}
+
+.container
+{
+    position: relative ;
+    max-width: 700px;
+    width: 100% ;
+    background-color:white ;
+    padding:25px ;
+    border-radius: 8px;
+    box-shadow: 0 0 15px rgba(0,0,0,0.1);
+
+}
+
+.title
+{
+    font-size: 1.5rem;
+    color: #333;
+    font-weight: 500;
+    text-align: center;
+
+}
+
+.container .form
+{
+    margin-top: 30px;
+}
+
+.form .input_box
+{
+    width: 100%;
+    margin-top: 20px;
+}
+
+.form .input_box input
+{
+    position: relative;
+    height: 50px;
+    width: 100%;
+    outline: none;
+    font-size: 1rem;
+    color: #707070;
+    margin-top: 8px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    padding: 0 15px;
+}
+
+
+.select-box select
+{
+    height: 100%;
+    width: 100%;
+    outline: none;
+    border: none;
+    color: #707070;
+    font-size: 1rem;
+}
+
+.input_box span
+{
+   color: #333; 
+}
+
+.form .column
+{
+    display: flex;
+    column-gap: 15px;
+}
+
+.address
+{
+    font-size: 1.2rem;
+    color: #333;
+    font-weight: 500;
+    margin-top: 15px;
+}
+
+.form button
+{
+    height: 55px;
+    width: 100%;
+    color: #fff;
+    font-size: 1rem;
+    border: none;
+    margin-top: 30px;
+    cursor: pointer;
+    border-radius: 6px;
+    font-weight: 400;
+    background-color: rgb(130, 106, 251);
+    transition: all 0.2s ease;
+}
+
+.input_box input:focus{
+    box-shadow: 0 1px 0 rgba(0,0,0,0.1);
+}
+
+.form button:hover
+{
+    background-color: rgb(88, 56, 250);
+}
+
+/* Responsive */
+@media screen and (max-width: 500px) {
+    .form .column {
+        flex-wrap: wrap;
+    }
+}
+    </style>
+    <div class="container">
+        <div class="title">Registration Form</div>
+        <form id="userForm" action="/submit" method="post" autocomplete="off" class="form">
+            <div class="user_details">
+                <div class="column">
+                <div class="input_box">
+                    <span class="details">First Name</span>
+                    <input type="text" placeholder="Enter your first name" required autocomplete="off">
+                </div>
+                <div class="input_box">
+                    <span class="details">Last Name</span>
+                    <input type="text" placeholder="Enter your last name" required autocomplete="nope">
+                </div>
+                </div>
+
+                 <div class="column">
+                <div class="input_box">
+                    <span class="details">Mobile Number</span>
+                    <input type="text" placeholder="Enter your mobile number" required autocomplete="nope">
+                </div>
+                <div class="input_box">
+                    <span class="details">E-mail</span>
+                    <input type="text" placeholder="Enter your first email" required autocomplete="nope">
+                </div>
+                </div>
+                <div class="address">Adress</div>
+                <div class="column">
+                <div class="input_box" >
+                    <span class="details">Street</span>
+                    <input type="text" placeholder="Enter your street" required autocomplete="nope">
+                </div>
+                <div class="input_box">
+                    <span class="details">City</span>
+                    <input type="text" placeholder="Enter your City" required autocomplete="nope">
+                </div>
+                </div>
+                <div class="column">
+                <div class="input_box">
+                    <span class="details">State</span>
+                    <input type="text" placeholder="Enter your State" required autocomplete="nope">
+                </div>
+                <div class="input_box">
+                    <span class="details">Country</span>
+                    <input type="text" placeholder="Enter your Country" required autocomplete="nope">
+                </div>
+                </div>
+                <div class="input_box">
+                    <span class="details">Login Id</span>
+                    <input type="text" placeholder="Enter LoginId" required autocomplete="off">
+                </div>
+                <div class="input_box">
+                    <span class="details">Password</span>
+                    <input type="text" placeholder="Enter your password" required autocomplete="nope">
+                </div>
+            </div>
+            <button type="submit">Save</button>
+
+
+        </form>
+    </div>
+
+     <script>
+        $(document).ready(function () {
+        $("#userForm").on("submit", function (event) {
+          event.preventDefault();
+
+          const formData = {
+            firstName: $('input[name="firstName"]').val(),
+            lastName: $('input[name="lastName"]').val(),
+            mobileNo: $('input[name="mobileNo"]').val(),
+            emailId: $('input[name="emailId"]').val(),
+            address: {
+              street: $('input[name="street"]').val(),
+              city: $('input[name="city"]').val(),
+              state: $('input[name="state"]').val(),
+              country: $('input[name="country"]').val(),
+            },
+            loginId: $('input[name="loginId"]').val(),
+            password: $('input[name="password"]').val(),
+          }; 
+
+          $.ajax({
+            type: "POST",
+            url: "http://localhost:3000/submit",
+            data: JSON.stringify(formData),
+            contentType: "application/json",
+            success: function (response) {
+              alert("User saved successfully");
+              window.location.href = "databasetable.html";
+            },
+            error: function (xhr) {
+              console.log("Error response:", xhr.responseText);
+              let errorMessage = "Error saving user:\n";
+
+              try {
+                const response = JSON.parse(xhr.responseText);
+                if (response.errors) {
+                  for (const field in response.errors) {
+                    errorMessage += `${field}: ${response.errors[field]}\n`;
+                  }
+                } else {
+                  errorMessage += "An unknown error occurred.";
+                }
+              } catch (e) {
+                errorMessage += "An unknown error occurred.";
+              }
+
+              alert(errorMessage);
+            },
+          }); 
+        });
+      }); 
+
+    </script> 
+</body>
+</html>
